@@ -1,0 +1,154 @@
+{
+  "scenarios": [
+    {
+      "id": "endpoint-marketing-01",
+      "label": "Phished Marketing Laptop",
+      "description": "An employee in marketing clicked a spear-phishing link, granting initial access to their workstation."
+    },
+    {
+      "id": "account-contractor-01",
+      "label": "Compromised Contractor Account",
+      "description": "A third-party contractor's credentials were found in a public paste site."
+    },
+    {
+      "id": "endpoint-dev-03",
+      "label": "Infected Developer Workstation",
+      "description": "A developer downloaded a trojanized npm package, compromising their local machine."
+    }
+  ],
+  "nodes": [
+    { "id": "endpoint-marketing-01", "type": "endpoint", "label": "Marketing Laptop 01", "privilege": "user", "criticality": "low" },
+    { "id": "endpoint-marketing-02", "type": "endpoint", "label": "Marketing Laptop 02", "privilege": "user", "criticality": "low" },
+    { "id": "endpoint-sales-01", "type": "endpoint", "label": "Sales Laptop 01", "privilege": "user", "criticality": "low" },
+    { "id": "endpoint-sales-02", "type": "endpoint", "label": "Sales Laptop 02", "privilege": "user", "criticality": "low" },
+    { "id": "endpoint-hr-01", "type": "endpoint", "label": "HR Workstation", "privilege": "user", "criticality": "low" },
+    { "id": "endpoint-finance-01", "type": "endpoint", "label": "Finance Workstation 01", "privilege": "user", "criticality": "low" },
+    { "id": "endpoint-finance-02", "type": "endpoint", "label": "Finance Workstation 02", "privilege": "user", "criticality": "low" },
+    { "id": "endpoint-exec-01", "type": "endpoint", "label": "CEO Laptop", "privilege": "user", "criticality": "medium" },
+    { "id": "endpoint-exec-02", "type": "endpoint", "label": "CTO Laptop", "privilege": "user", "criticality": "medium" },
+    { "id": "endpoint-dev-01", "type": "endpoint", "label": "Dev Workstation 01", "privilege": "user", "criticality": "low" },
+    { "id": "endpoint-dev-02", "type": "endpoint", "label": "Dev Workstation 02", "privilege": "user", "criticality": "low" },
+    { "id": "endpoint-dev-03", "type": "endpoint", "label": "Dev Workstation 03", "privilege": "user", "criticality": "low" },
+    { "id": "endpoint-it-01", "type": "endpoint", "label": "IT Admin Workstation", "privilege": "admin", "criticality": "medium" },
+    { "id": "endpoint-it-02", "type": "endpoint", "label": "IT Support Desk", "privilege": "user", "criticality": "low" },
+    { "id": "endpoint-ops-01", "type": "endpoint", "label": "Operations Laptop", "privilege": "user", "criticality": "low" },
+
+    { "id": "server-app-01", "type": "server", "label": "Web Application Server", "privilege": "user", "criticality": "medium" },
+    { "id": "server-app-02", "type": "server", "label": "Internal API Server", "privilege": "user", "criticality": "medium" },
+    { "id": "server-file-01", "type": "server", "label": "Corporate File Server", "privilege": "user", "criticality": "medium" },
+    { "id": "server-mail-01", "type": "server", "label": "Mail Server", "privilege": "user", "criticality": "medium" },
+    { "id": "server-dns-01", "type": "server", "label": "DNS Server", "privilege": "user", "criticality": "medium" },
+    { "id": "server-build-01", "type": "server", "label": "Build Server (CI)", "privilege": "admin", "criticality": "high" },
+    { "id": "server-db-01", "type": "server", "label": "Internal DB Server", "privilege": "user", "criticality": "high" },
+    { "id": "server-admin-01", "type": "server", "label": "Admin Server (Jump Box)", "privilege": "admin", "criticality": "high" },
+    { "id": "server-backup-01", "type": "server", "label": "Backup Server", "privilege": "user", "criticality": "medium" },
+    { "id": "server-vpn-01", "type": "server", "label": "VPN Gateway", "privilege": "user", "criticality": "medium" },
+
+    { "id": "cloud-storage-01", "type": "cloud", "label": "Cloud Storage (S3/GCS)", "privilege": "n/a", "criticality": "medium" },
+    { "id": "cloud-saas-admin-01", "type": "cloud", "label": "SaaS Admin Console", "privilege": "admin", "criticality": "high" },
+    { "id": "cloud-cicd-01", "type": "cloud", "label": "CI/CD Pipeline (GitHub Actions)", "privilege": "n/a", "criticality": "high" },
+    { "id": "cloud-monitoring-01", "type": "cloud", "label": "Cloud Monitoring Dashboard", "privilege": "n/a", "criticality": "medium" },
+    { "id": "cloud-iam-01", "type": "cloud", "label": "Cloud IAM Console", "privilege": "admin", "criticality": "high" },
+
+    { "id": "account-admin-01", "type": "account", "label": "Domain Admin Account", "privilege": "admin", "criticality": "high" },
+    { "id": "account-admin-02", "type": "account", "label": "Cloud Admin Service Account", "privilege": "admin", "criticality": "high" },
+    { "id": "account-svc-01", "type": "account", "label": "Build Service Account", "privilege": "user", "criticality": "medium" },
+    { "id": "account-svc-02", "type": "account", "label": "Monitoring Service Account", "privilege": "user", "criticality": "low" },
+    { "id": "account-contractor-01", "type": "account", "label": "Contractor VPN Account", "privilege": "user", "criticality": "medium" },
+    { "id": "account-dev-01", "type": "account", "label": "Dev Team Shared Account", "privilege": "user", "criticality": "medium" },
+
+    { "id": "critical-customer-db", "type": "server", "label": "Customer Database", "privilege": "admin", "criticality": "critical" },
+    { "id": "critical-payment", "type": "server", "label": "Payment Processing System", "privilege": "admin", "criticality": "critical" },
+    { "id": "critical-source-repo", "type": "cloud", "label": "Source Code Repository", "privilege": "n/a", "criticality": "critical" }
+  ],
+  "edges": [
+    { "source": "endpoint-marketing-01", "target": "server-file-01", "relationship": "network-access", "risk": "low" },
+    { "source": "endpoint-marketing-02", "target": "server-file-01", "relationship": "network-access", "risk": "low" },
+    { "source": "endpoint-marketing-01", "target": "server-mail-01", "relationship": "network-access", "risk": "low" },
+    { "source": "endpoint-marketing-01", "target": "account-admin-01", "relationship": "shared-credentials", "risk": "critical" },
+
+    { "source": "endpoint-sales-01", "target": "server-file-01", "relationship": "network-access", "risk": "low" },
+    { "source": "endpoint-sales-01", "target": "server-app-01", "relationship": "network-access", "risk": "low" },
+    { "source": "endpoint-sales-02", "target": "server-mail-01", "relationship": "network-access", "risk": "low" },
+
+    { "source": "endpoint-hr-01", "target": "server-file-01", "relationship": "network-access", "risk": "low" },
+    { "source": "endpoint-hr-01", "target": "server-db-01", "relationship": "network-access", "risk": "medium" },
+
+    { "source": "endpoint-finance-01", "target": "server-db-01", "relationship": "network-access", "risk": "medium" },
+    { "source": "endpoint-finance-01", "target": "critical-payment", "relationship": "network-access", "risk": "high" },
+    { "source": "endpoint-finance-02", "target": "server-file-01", "relationship": "network-access", "risk": "low" },
+
+    { "source": "endpoint-exec-01", "target": "server-mail-01", "relationship": "network-access", "risk": "low" },
+    { "source": "endpoint-exec-01", "target": "cloud-saas-admin-01", "relationship": "trust-relationship", "risk": "medium" },
+    { "source": "endpoint-exec-02", "target": "cloud-saas-admin-01", "relationship": "trust-relationship", "risk": "medium" },
+
+    { "source": "endpoint-dev-01", "target": "server-build-01", "relationship": "network-access", "risk": "medium" },
+    { "source": "endpoint-dev-01", "target": "account-dev-01", "relationship": "shared-credentials", "risk": "medium" },
+    { "source": "endpoint-dev-02", "target": "server-build-01", "relationship": "network-access", "risk": "medium" },
+    { "source": "endpoint-dev-02", "target": "server-app-02", "relationship": "network-access", "risk": "low" },
+    { "source": "endpoint-dev-03", "target": "server-build-01", "relationship": "network-access", "risk": "medium" },
+    { "source": "endpoint-dev-03", "target": "account-dev-01", "relationship": "shared-credentials", "risk": "medium" },
+
+    { "source": "endpoint-it-01", "target": "server-admin-01", "relationship": "admin-access", "risk": "high" },
+    { "source": "endpoint-it-01", "target": "account-admin-01", "relationship": "shared-credentials", "risk": "critical" },
+    { "source": "endpoint-it-01", "target": "server-dns-01", "relationship": "admin-access", "risk": "medium" },
+    { "source": "endpoint-it-02", "target": "server-file-01", "relationship": "network-access", "risk": "low" },
+    { "source": "endpoint-it-02", "target": "server-mail-01", "relationship": "network-access", "risk": "low" },
+
+    { "source": "endpoint-ops-01", "target": "server-vpn-01", "relationship": "network-access", "risk": "low" },
+    { "source": "endpoint-ops-01", "target": "cloud-monitoring-01", "relationship": "api-access", "risk": "low" },
+
+    { "source": "account-contractor-01", "target": "server-vpn-01", "relationship": "trust-relationship", "risk": "medium" },
+    { "source": "server-vpn-01", "target": "server-file-01", "relationship": "network-access", "risk": "low" },
+    { "source": "server-vpn-01", "target": "server-app-01", "relationship": "network-access", "risk": "low" },
+    { "source": "server-vpn-01", "target": "server-app-02", "relationship": "network-access", "risk": "medium" },
+
+    { "source": "account-admin-01", "target": "server-admin-01", "relationship": "admin-access", "risk": "high" },
+    { "source": "server-admin-01", "target": "critical-customer-db", "relationship": "admin-access", "risk": "critical" },
+    { "source": "server-admin-01", "target": "critical-payment", "relationship": "admin-access", "risk": "critical" },
+    { "source": "server-admin-01", "target": "server-db-01", "relationship": "admin-access", "risk": "high" },
+    { "source": "server-admin-01", "target": "server-build-01", "relationship": "admin-access", "risk": "high" },
+    { "source": "server-admin-01", "target": "cloud-iam-01", "relationship": "admin-access", "risk": "critical" },
+
+    { "source": "account-admin-02", "target": "cloud-iam-01", "relationship": "admin-access", "risk": "critical" },
+    { "source": "account-admin-02", "target": "cloud-storage-01", "relationship": "admin-access", "risk": "high" },
+    { "source": "account-admin-02", "target": "cloud-saas-admin-01", "relationship": "admin-access", "risk": "high" },
+
+    { "source": "account-dev-01", "target": "server-build-01", "relationship": "trust-relationship", "risk": "medium" },
+    { "source": "account-dev-01", "target": "cloud-cicd-01", "relationship": "trust-relationship", "risk": "high" },
+
+    { "source": "server-build-01", "target": "cloud-cicd-01", "relationship": "api-access", "risk": "high" },
+    { "source": "server-build-01", "target": "critical-source-repo", "relationship": "api-access", "risk": "critical" },
+    { "source": "server-build-01", "target": "account-svc-01", "relationship": "shared-credentials", "risk": "high" },
+
+    { "source": "account-svc-01", "target": "cloud-cicd-01", "relationship": "trust-relationship", "risk": "medium" },
+    { "source": "account-svc-01", "target": "cloud-storage-01", "relationship": "api-access", "risk": "medium" },
+
+    { "source": "cloud-cicd-01", "target": "critical-source-repo", "relationship": "trust-relationship", "risk": "high" },
+    { "source": "cloud-cicd-01", "target": "cloud-storage-01", "relationship": "api-access", "risk": "medium" },
+
+    { "source": "cloud-iam-01", "target": "account-admin-02", "relationship": "admin-access", "risk": "critical" },
+    { "source": "cloud-iam-01", "target": "cloud-storage-01", "relationship": "admin-access", "risk": "high" },
+    { "source": "cloud-iam-01", "target": "cloud-saas-admin-01", "relationship": "admin-access", "risk": "high" },
+
+    { "source": "server-db-01", "target": "critical-customer-db", "relationship": "network-access", "risk": "high" },
+    { "source": "server-db-01", "target": "server-backup-01", "relationship": "network-access", "risk": "low" },
+
+    { "source": "server-file-01", "target": "server-backup-01", "relationship": "network-access", "risk": "low" },
+    { "source": "server-file-01", "target": "account-admin-01", "relationship": "shared-credentials", "risk": "critical" },
+
+    { "source": "server-mail-01", "target": "server-dns-01", "relationship": "network-access", "risk": "low" },
+    { "source": "server-mail-01", "target": "cloud-storage-01", "relationship": "api-access", "risk": "medium" },
+
+    { "source": "server-app-01", "target": "server-db-01", "relationship": "network-access", "risk": "medium" },
+    { "source": "server-app-01", "target": "server-app-02", "relationship": "network-access", "risk": "low" },
+    { "source": "server-app-02", "target": "server-db-01", "relationship": "network-access", "risk": "medium" },
+
+    { "source": "cloud-saas-admin-01", "target": "account-admin-02", "relationship": "shared-credentials", "risk": "high" },
+
+    { "source": "account-svc-02", "target": "cloud-monitoring-01", "relationship": "trust-relationship", "risk": "low" },
+    { "source": "cloud-monitoring-01", "target": "server-app-01", "relationship": "api-access", "risk": "low" },
+
+    { "source": "server-backup-01", "target": "cloud-storage-01", "relationship": "api-access", "risk": "medium" }
+  ]
+}
